@@ -1,0 +1,53 @@
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+
+{% block title %}
+編集
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+<div class="card">
+
+    <h2>リファレンスを編集する</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <div class="form-row">
+                <h3>リファレンス名</h3>
+                {{ form.title }}
+            </div>
+
+            <div class="form-row">
+                <h3>カテゴリ</h3>
+                {{ form.category }}
+            </div>
+
+            <div class="form-row">
+                <h3>コード</h3>
+                {{ form.code }}
+            </div>
+
+            <div class="form-row">
+                <h3>説明</h3>
+                {{ form.description }}
+            </div>
+
+            <div class="button-area">
+                <button type="submit" class="button-primary">
+                    更新する
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

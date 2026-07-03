@@ -1,0 +1,458 @@
+/* ────────────────────────────────────────────────── */
+/* ページ全体 */
+/* ────────────────────────────────────────────────── */
+body {
+    margin: 0;
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #f5f5f5;
+    color: #444
+}
+
+/* ページ幅（max-width）を padding,border,content込みにする */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+/* ────────────────────────────────────────────────── */
+
+
+
+/* ────────────────────────────────────────────────── */
+/* base.htmlの共通部分 */
+/* ────────────────────────────────────────────────── */
+/* ヘッダー */
+.container {
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+header {
+    display: flex;
+    /* ↑ タイトルとメニューを一行にしたい時は有効にする */
+    align-items: center;
+    gap: 12px;
+
+    padding: 20px;
+    background-color: rgba(83, 124, 165, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+header h1 a {
+    margin: 0;
+    color: white;
+    font-size: 25px;
+}
+
+
+/* メニュー */
+.header-menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: #e5e5e5;
+}
+
+.header-menu a {
+    color: #e5e5e5;
+    text-decoration: none;
+}
+
+.header-menu a:hover {
+    color: white;
+}
+
+/* 検索フォーム */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.search-form input {
+    width: 90px;
+}
+
+/* メイン */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* フッター */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+/* ────────────────────────────────────────────────── */
+
+
+
+/* ────────────────────────────────────────────────── */
+/* カード設定 */
+/* ────────────────────────────────────────────────── */
+.card {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li.card {
+    margin-bottom: 15px;
+}
+
+.card h1 {
+    font-size: 20px;
+}
+
+/* コードブロック装飾 */
+.code-block {
+    background: #424d5c;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* 詳細情報 */
+/* ────────────────────────────────────────────────── */
+.detail-info summary {
+    text-align: right;
+    cursor: pointer;
+}
+
+.detail-info summary {
+    text-align: right;
+}
+
+.detail-info details>*:not(summary) {
+    text-align: left;
+
+}
+
+/* タグ */
+.detail-info .tag {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    background: #eef4fb;
+    color: #537ca5;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* カテゴリ */
+.category-tag {
+    margin-left: auto;
+    width: fit-content;
+}
+
+/* 日付 */
+.date-area {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    /* この値で間隔を調整 */
+}
+
+.date-area .tag {
+    margin-left: 0;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* 作業フロー詳細 */
+/* ────────────────────────────────────────────────── */
+.flow-card {
+    width: 100%;
+    background-color:  rgba(83, 124, 165, 0.55);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+}
+
+.flow-title {
+    color: white;
+    margin-bottom: 0;
+    font-weight:600;
+    margin: 0;
+    flex:1;  /* タイトルが長くてもアイコンを右端に寄せる */
+}
+
+/* タイトルとアイコンを横並びにする */
+.flow-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* フローカード内のアイコン */
+/* フローカード内のアイコン */
+.detail-actions.flow a,
+.detail-actions.flow button {
+    color: white;
+}
+
+.detail-actions.flow a:hover,
+.detail-actions.flow button:hover {
+    color: #eef4fb;
+}
+
+.detail-actions.flow {
+    margin: 0;
+}
+
+/* ステップ */
+.flow-step h3 {
+color:#537ca5;
+    font-size: 20px;
+    margin: 5px 0 6px;
+}
+
+/* 概要 */
+.flow-description summary {
+    color: white;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.flow-description p {
+    margin-top: 8px;
+    color: #eef4fb;
+    font-size: 15px;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* リファレンス一覧 */
+/* ────────────────────────────────────────────────── */
+.reference-section li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 0;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* フォーム調整 */
+/* ────────────────────────────────────────────────── */
+.form-group {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+}
+
+.form-row {
+    background: #f8f9fb;
+    border: 1px solid #dde6ef;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.form-row h3 {
+    margin: 0 0 10px;
+    color: #537ca5;
+    font-size: 17px;
+}
+
+/* フォームボタン調整 */
+.button-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.button-area form {
+    margin: 0;
+}
+
+.button-primary,
+.button-danger,
+.button-secondary {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font: inherit;
+    cursor: pointer;
+}
+
+.button-primary {
+    background: rgba(83, 124, 165, 1);
+    color: #fff;
+    border: none;
+}
+
+.button-danger {
+    background: #d9534f;
+    color: #fff;
+    border: none;
+}
+
+.button-secondary {
+    background: rgb(240, 240, 240);
+    color: #666;
+    text-decoration: none;
+}
+
+.button-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.button-area form {
+    margin: 0;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* アイコン設定 */
+/* ────────────────────────────────────────────────── */
+.icon-button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+/* お気に入り済は黒塗りに */
+.favorite-filled {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* アイコンまとめ */
+.detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.detail-actions a {
+    text-decoration: none;
+    color: #666;
+}
+
+.detail-actions a:hover {
+
+    color: #333;
+}
+
+
+
+/* アイコンの余分な高さを消す */
+.icon-button .material-symbols-outlined {
+    display: block;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* ツールチップ */
+/* ────────────────────────────────────────────────── */
+.tooltip {
+    position: relative;
+    display: inline-flex;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+    left: 50%;
+    bottom: -36px;
+    transform: translateX(-50%);
+
+    background: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+
+    font-size: 12px;
+    white-space: pre;
+
+    opacity: 0;
+    transition: opacity .2s;
+
+    pointer-events: none;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+}
+/* ────────────────────────────────────────────────── */
+
+
+/* ────────────────────────────────────────────────── */
+/* トースト */
+/* ────────────────────────────────────────────────── */
+#toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 8px 16px;
+
+    background: rgba(60, 60, 60, .85);
+    color: white;
+
+    border-radius: 20px;
+
+    opacity: 0;
+    transition: .3s;
+}
+
+#toast.show {
+    opacity: 1;
+}
+/* ────────────────────────────────────────────────── */

@@ -1,0 +1,137 @@
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+
+{% block title %}
+Dev Flow
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+<div class="flow-card">
+    <div class="flow-header">
+        <h2 class="flow-title">{{ flow.title}}</h2>
+
+        <!-- アイコンまとめ -->
+        <div class="detail-actions flow">
+            <!-- インフォメーションボタン -->
+            <button id="flow-info-btn" class="icon-button tooltip" data-tooltip="{{ flow.created_at|date:" Y.m.d" }}作成
+ {{ flow.updated_at|date:"Y.m.d" }}更新">
+                <span class="material-symbols-outlined favorite-filled">info</span>
+            </button>
+
+            <!-- 編集ボタン -->
+            <a href="{% url 'flow_edit' flow.pk %}" class="tooltip" data-tooltip="編集する">
+                <span class="material-symbols-outlined">
+                    edit
+                </span>
+            </a>
+
+            <!-- 削除ボタン -->
+            <a href="{% url 'flow_delete' flow.pk %}" class="tooltip" data-tooltip="削除する">
+                <span class="material-symbols-outlined">
+                    delete
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="flow-description">
+        <summary>概要</summary>
+        {% if flow.description %}
+        <p>{{ flow.description|linebreaksbr }}</p>
+        {% endif %}
+    </div>
+
+</div>
+
+
+{% for step in steps %}
+
+<section class="flow-step">
+
+    <h3>step{{ forloop.counter }}</h3>
+
+    <div class="card">
+
+        <h3>{{ step.reference.title }}</h3>
+
+        <pre class="code-block">{{ step.reference.code }}</pre>
+
+        <div class="detail-actions">
+            <button class="icon-button tooltip" data-tooltip="コピーする" onclick="copyCode(this)">
+                <span class="material-symbols-outlined">
+                    content_copy
+                </span>
+            </button>
+        </div>
+
+        <div class="detail-info">
+            <details>
+
+                <summary>
+                    詳細情報
+                </summary>
+
+                {% if step.reference.description %}
+                <p>{{ step.reference.description|linebreaksbr }}</p>
+                {% endif %}
+
+                <p class="tag category-tag">
+                    カテゴリ：{{ step.reference.category }}
+                </p>
+
+                <div class="date-area">
+                    <p class="tag date">
+                        {{ step.reference.created_at|date:"Y.m.d" }}作成
+                    </p>
+
+                    <p class="tag date">
+                        {{ step.reference.updated_at|date:"Y.m.d" }}更新
+                    </p>
+                </div>
+
+            </details>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ボタン設定 -->
+<script>
+    function copyCode(button) {
+
+        const code =
+            button
+                .closest(".card")
+                .querySelector(".code-block")
+                .innerText;
+
+        navigator.clipboard.writeText(code);
+
+        showToast();
+    }
+
+    function showToast() {
+
+        const toast = document.getElementById("toast");
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 1500);
+    }
+
+</script>
+
+<div id="toast">
+    コピーしました
+</div>
+
+
+{% endfor %}
+
+{% endblock %}

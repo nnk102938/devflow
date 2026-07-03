@@ -1,0 +1,37 @@
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+
+{% block title %}
+削除
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+<div class="card">
+
+    <h2>フローを削除する</h2>
+
+    <p>「{{ flow.title }}」を削除してもいいですか？</p>
+
+    <div class="button-area">
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="button-danger">
+                削除する
+            </button>
+        </form>
+        
+        <a href="{% url 'flow' flow.pk %}" class="button-secondary">
+            削除しません
+        </a>
+
+    </div>
+
+
+
+</div>
+
+{% endblock %}

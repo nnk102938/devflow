@@ -1,0 +1,106 @@
+{# 全ページ共通のレイアウト #}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Dev Flow{% endblock %}</title>
+
+    {% load static %}
+
+    <!-- Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <!-- アイコン -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght,GRAD,opsz@0..1,100..700,-50..200,20..48">
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'references/css/style.css' %}">
+
+</head>
+
+<body>
+
+    <header class="container">
+
+        <h1>
+            <a href="{% url 'top' %}">
+                DevFlow
+            </a>
+        </h1>
+
+        <div class="header-menu">
+            <a href="{% url 'top' %}" class="tooltip" data-tooltip="top">
+                <span class="material-symbols-outlined">
+                    home
+                </span>
+            </a>
+
+            <a href="{% url 'favorites' %}" class="tooltip" data-tooltip="お気に入り">
+                <span class="material-symbols-outlined">
+                    star_shine
+                </span>
+            </a>
+
+            <a href="{% url 'create' %}" class="tooltip" data-tooltip="リファレンス作成">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </a>
+
+            <a href="{% url 'flow_create' %}" class="tooltip" data-tooltip="フロー作成">
+                <span class="material-symbols-outlined">
+                    playlist_add
+                </span>
+            </a>
+
+            <div class="search-form">
+                <form class="search-form" action="{% url 'search' %}" method="get">
+                    <input type="text" name="q" value="{{ query|default_if_none:'' }}" placeholder="検索">
+                    <button type="submit" class="icon-button tooltip" data-tooltip="検索">
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+    </header>
+
+    <main class="container">
+        {# 各ページ固有の内容がここに挿入される #}
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <small>© 2026</small>
+    </footer>
+
+    {% block script %}
+    {% endblock %}
+
+    <!-- 【共通処理】お気に入りを黒塗りにする → updateFavoriteIcons();で呼び出し -->
+    <script>
+        function updateFavoriteIcons() {
+            const favorites =
+                JSON.parse(localStorage.getItem("favorites")) || [];
+
+            favorites.forEach(id => {
+                const star = document.getElementById(`favorite-${id}`);
+
+                if (star) {
+                    star.classList.add("favorite-filled");
+                }
+            });
+        }
+
+        updateFavoriteIcons();
+    </script>
+
+</body>
+
+</html>

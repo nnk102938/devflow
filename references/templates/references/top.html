@@ -1,0 +1,63 @@
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+
+{% block title %}
+top
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+<section class="card flow-section">
+    <h2>作業フロー</h2>
+
+    <ul>
+
+        {% for flow in flows %}
+
+        <li>
+            <a href="{% url 'flow' flow.pk %}">
+                {{ flow.title }}
+            </a>
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+</section>
+
+
+<section class="card reference-section">
+    <h2>リファレンス一覧</h2>
+    <ul>
+        {% for reference in references %}
+
+        <li>
+            <span id="favorite-{{ reference.pk }}" class="material-symbols-outlined">
+                star
+            </span>
+
+            <a href="{% url 'detail' reference.pk %}">
+                {{ reference.title }}
+            </a>
+        </li>
+
+        {% empty %}
+        <li>該当するリファレンスはありません。</li>
+
+        {% endfor %}
+    </ul>
+</section>
+
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+    updateFavoriteIcons();
+</script>
+
+{% endblock %}

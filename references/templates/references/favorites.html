@@ -1,0 +1,58 @@
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+
+{% block title %}
+お気に入り
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+
+<section class="card">
+
+    <h2>お気に入り一覧</h2>
+
+    <ul id="favorite-list">
+
+        {% for reference in references %}
+
+        <li class="favorite-item" data-id="{{ reference.pk}}">
+
+            <span id="favorite-{{ reference.pk }}" class="material-symbols-outlined">
+                star
+            </span>
+
+            <a href="{% url 'detail' reference.pk %}">
+                {{ reference.title }}
+            </a>
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+</section>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    const favorites =
+        JSON.parse(localStorage.getItem("favorites")) || [];
+
+    // お気に入り以外を隠す
+    document.querySelectorAll(".favorite-item").forEach(item => {
+        if (!favorites.includes(item.dataset.id)) {
+            item.style.display = "none";
+        }
+    });
+
+    // ★を黒塗り
+    updateFavoriteIcons();
+</script>
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{# base.htmlを継承 #}
+
+{% extends "references/base.html" %}
+
+{% block title %}
+詳細
+{% endblock %}
+
+{% block content %}
+
+{# このページ固有の内容 #}
+
+<div class="card">
+
+    <h1>{{ reference.title }}</h1>
+
+    <!-- コードボックス -->
+    <pre id="code" class="code-block">{{ reference.code }}</pre>
+
+    <!-- アイコンまとめ -->
+    <div class="detail-actions">
+
+        <!-- コピーボタン -->
+        <button class="icon-button tooltip" data-tooltip="コピーする" onclick="copyCode()">
+            <span class="material-symbols-outlined">content_copy</span>
+        </button>
+
+        <!-- お気に入りボタン -->
+        <button id="favorite-btn" class="icon-button tooltip" onclick="toggleFavorite()">
+            <span class="material-symbols-outlined favorite-filled">star</span>
+        </button>
+
+        <!-- 編集ボタン -->
+        <a href="{% url 'edit' reference.pk %}" class="tooltip" data-tooltip="編集する">
+            <span class="material-symbols-outlined">
+                edit
+            </span>
+        </a>
+
+        <!-- 削除ボタン -->
+        <a href="{% url 'delete' reference.pk %}" class="tooltip" data-tooltip="削除する">
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </a>
+
+    </div>
+
+
+    <!-- 詳細(折り畳み) -->
+    <div class="detail-info">
+        <details>
+
+            <summary>
+                詳細情報
+            </summary>
+
+            {% if reference.description %}
+            <p>{{ reference.description|linebreaksbr }}</p>
+            {% endif %}
+
+            <p class="tag category-tag">カテゴリ：{{ reference.category }}</p>
+
+            <div class="date-area">
+                <p class="tag date">{{ reference.created_at|date:"Y.m.d" }}作成</p>
+                <p class="tag date">{{ reference.updated_at|date:"Y.m.d" }}更新</p>
+            </div>
+
+        </details>
+
+    </div>
+
+</div>
+
+<!-- ボタン設定 -->
+<script>
+
+    // ワンクリックコピー ──────────────────────────────────────────────────────
+    function copyCode() {
+        const code = document.getElementById("code").innerText;
+        navigator.clipboard.writeText(code);
+        showToast();
+    }
+
+    function showToast() {
+
+        const toast = document.getElementById("toast");
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 1500);
+    }
+
+    // お気に入り ──────────────────────────────────────────────────────────────
+    const referenceId = "{{ reference.pk }}";
+
+    function toggleFavorite() {
+        let favorites =
+            JSON.parse(localStorage.getItem("favorites")) || [];
+
+        if (favorites.includes(referenceId)) {
+            favorites = favorites.filter(id => id !== referenceId);
+        } else {
+            favorites.push(referenceId);
+        }
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+        updateButton();
+    }
+
+    function updateButton() {
+        const favorites =
+            JSON.parse(localStorage.getItem("favorites")) || [];
+
+        const button =
+            document.getElementById("favorite-btn");
+
+        if (favorites.includes(referenceId)) {
+            const icon = button.querySelector("span");
+            icon.classList.add("favorite-filled");
+            button.dataset.tooltip = "お気に入り済み";
+        } else {
+            const icon = button.querySelector("span");
+            icon.classList.remove("favorite-filled");
+            button.dataset.tooltip = "お気に入り登録";
+        }
+    }
+    // DOM読み込み後に実行 ───────────────────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", function () {
+        updateButton();
+    })
+
+</script>
+
+<div id="toast">
+    コピーしました
+</div>
+
+{% endblock %}
