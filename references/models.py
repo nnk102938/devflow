@@ -64,6 +64,14 @@ class FlowStep(models.Model):
 
     class Meta:
         ordering = ["order"]
-    
+
+        # 同じフロー内でStep番号を重複させない
+        constraints = [
+            models.UniqueConstraint(
+                fields=["flow", "order"],
+                name="unique_flow_order",
+            )
+        ]
+
     def __str__(self):
         return f"{self.flow.title} - Step{self.order}"

@@ -46,23 +46,7 @@ class ReferenceForm(forms.ModelForm):
 # ───────────────────────────────────────────────────────────
 # フローフォーム
 # ───────────────────────────────────────────────────────────
-class FlowForm(forms.ModelForm):
-    step1 = forms.ModelChoiceField(
-        queryset=Reference.objects.all(),
-        required=False,
-        label="Step1",
-    )
-    step2 = forms.ModelChoiceField(
-        queryset=Reference.objects.all(),
-        required=False,
-        label="Step2",
-    )
-    step3 = forms.ModelChoiceField(
-        queryset=Reference.objects.all(),
-        required=False,
-        label="Step3",
-    )    
-    
+class FlowForm(forms.ModelForm):    
     class Meta:
         model = Flow
 
@@ -87,8 +71,3 @@ class FlowForm(forms.ModelForm):
                 }),
         }
 # ───────────────────────────────────────────────────────────
-
-# ───────────────────────────────────────────────────────────
-# フォームステップ
-# ───────────────────────────────────────────────────────────
-

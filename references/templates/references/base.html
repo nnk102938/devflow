@@ -67,7 +67,6 @@
             </div>
         </div>
 
-
     </header>
 
     <main class="container">
@@ -80,8 +79,7 @@
         <small>© 2026</small>
     </footer>
 
-    {% block script %}
-    {% endblock %}
+    <div id="toast"></div>
 
     <!-- 【共通処理】お気に入りを黒塗りにする → updateFavoriteIcons();で呼び出し -->
     <script>
@@ -97,9 +95,29 @@
                 }
             });
         }
-
         updateFavoriteIcons();
+
+        // トースト設定
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+
+            toast.textContent = message;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 1500);
+        }
+
+        {% if messages %}
+        {% for message in messages %}
+        showToast('{{ message|escapejs }}');
+        {% endfor %}
+        {% endif %}
     </script>
+
+    {% block script %}
+    {% endblock %}
 
 </body>
 

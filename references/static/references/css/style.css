@@ -121,6 +121,18 @@ li.card {
     font-size: 20px;
 }
 
+/* 削除文言調整 */
+.delete-card {
+    padding: 20px 24px;
+}
+.delete-card p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.warning-text {
+    color: #d9534f;
+}
+
 /* コードブロック装飾 */
 .code-block {
     background: #424d5c;
@@ -138,10 +150,6 @@ li.card {
 .detail-info summary {
     text-align: right;
     cursor: pointer;
-}
-
-.detail-info summary {
-    text-align: right;
 }
 
 .detail-info details>*:not(summary) {
@@ -246,20 +254,6 @@ color:#537ca5;
 }
 /* ────────────────────────────────────────────────── */
 
-
-/* ────────────────────────────────────────────────── */
-/* リファレンス一覧 */
-/* ────────────────────────────────────────────────── */
-.reference-section li {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    padding: 8px 0;
-}
-/* ────────────────────────────────────────────────── */
-
-
 /* ────────────────────────────────────────────────── */
 /* フォーム調整 */
 /* ────────────────────────────────────────────────── */
@@ -290,13 +284,6 @@ color:#537ca5;
 }
 
 /* フォームボタン調整 */
-.button-area {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-}
-
 .button-area form {
     margin: 0;
 }
@@ -333,10 +320,61 @@ color:#537ca5;
     justify-content: center;
     align-items: center;
     gap: 12px;
+    margin: 0;
 }
 
-.button-area form {
-    margin: 0;
+/* stepコンテナ */
+.step-container {
+    display: flex;
+    flex-direction: column;
+}
+.step-item {
+    position: relative;
+}
+
+/* step追加ボタン */
+.button-add {
+    padding: 4px 10px;
+    font-size: 14px;
+
+    background: #eef4fb;
+    color: #537ca5;
+    border: 1px dashed #537ca5;
+    border-radius: 6px;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+.button-add:hover {
+    background: #dfeaf6;
+}
+
+/* 入替・削除ボタン調整 */
+.step-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    display: flex;
+    gap: 4px;
+}
+
+.step-actions button {
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+
+    color: #8f98a3;
+}
+
+.step-actions button:hover {
+    color: #537ca5;
+}
+
+.step-actions .material-symbols-outlined {
+    font-size: 18px;
 }
 /* ────────────────────────────────────────────────── */
 
@@ -387,11 +425,17 @@ color:#537ca5;
     color: #333;
 }
 
-
-
 /* アイコンの余分な高さを消す */
 .icon-button .material-symbols-outlined {
     display: block;
+}
+
+/* お気に入り・検索結果のアイコンの高さを揃える */
+.reference-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
 }
 /* ────────────────────────────────────────────────── */
 
@@ -437,7 +481,7 @@ color:#537ca5;
 /* ────────────────────────────────────────────────── */
 #toast {
     position: fixed;
-    bottom: 24px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
 

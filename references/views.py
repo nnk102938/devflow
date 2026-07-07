@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from .models import Reference,Flow,FlowStep
 from .forms import ReferenceForm,FlowForm
+from django.contrib import messages
 
 
 # ───────────────────────────────────────────────────────────
@@ -58,32 +59,29 @@ def flow_create(request):
         if form.is_valid():
             flow = form.save()
 
-            steps = [
-                form.cleaned_data["step1"],
-                form.cleaned_data["step2"],
-                form.cleaned_data["step3"],
-            ]
-
-            order = 1
-
-            for ref in steps:
-                if ref:
+            for i, ref_id in enumerate(request.POST.getlist("step_reference")):
+                if ref_id:
                     FlowStep.objects.create(
                         flow=flow,
-                        reference=ref,
-                        order=order,
+                        reference_id=ref_id,
+                        order=i + 1,
                     )
-                    order += 1
-
+            messages.success(request,"フローを作成しました。")
             return redirect("flow", pk=flow.pk)
         
     else:
         form = FlowForm()
 
+
+    references= Reference.objects.all()
+
     return render(
         request, 
         "references/flow_create.html",
-        {"form": form}
+        {
+            "form": form,
+            "references":references,
+            }
         )
 
 # ───────────────────────────────────────────────────────────
@@ -107,23 +105,15 @@ def flow_update(request,pk):
 
             FlowStep.objects.filter(flow=flow).delete()
 
-            steps = [
-                form.cleaned_data["step1"],
-                form.cleaned_data["step2"],
-                form.cleaned_data["step3"],
-            ]
-
-            order = 1
-
-            for ref in steps:
-                if ref:
+            for i,ref_id in enumerate(request.POST.getlist("step_reference")):
+                if ref_id:
                     FlowStep.objects.create(
                         flow=flow,
-                        reference=ref,
-                        order=order,
+                        reference_id=ref_id,
+                        order=i + 1
                     )
-                    order += 1
 
+            messages.success(request, "フローを更新しました。")
             return redirect("flow", pk=flow.pk)
         
     else:
@@ -131,26 +121,18 @@ def flow_update(request,pk):
             flow=flow
         ).order_by("order")
 
-        initial = {}
-
-        if len(steps) > 0:
-            initial["step1"] = steps[0].reference
-
-        if len(steps) > 1:
-            initial["step2"] = steps[1].reference
-        
-        if len(steps) > 2:
-            initial["step3"] = steps[2].reference
-
         form = FlowForm(
             instance=flow,
-            initial=initial,
         )
 
     return render(
         request,
         "references/flow_update.html",
-        {"form": form}
+        {
+            "form": form,
+            "steps": steps,
+            "references": Reference.objects.all(),
+            },
         )
 
 # ───────────────────────────────────────────────────────────
@@ -167,6 +149,7 @@ def flow_delete(request,pk):
     
     if request.method == "POST":
         flow.delete()
+        messages.success(request, "フローを削除しました。")
         return redirect("top")
 
     return render(
@@ -211,9 +194,7 @@ def favorites(request):
 
     references = Reference.objects.all()
         # Referenceモデルに保存されている全データを取得
-
-    query = request.GET.get("q")
-
+        
     return render(
         request,
         "references/favorites.html",
@@ -232,7 +213,7 @@ def detail(request,pk):
 
     reference = get_object_or_404(
         Reference,
-        pk = pk  #モデルのpkフィールドにURLから来たpkの値を入れる
+        pk = pk  #モデルのpkフィールド = URLから来たpkの値
         )
     
     return render(
@@ -251,6 +232,7 @@ def create(request):
         
         if form.is_valid():
             form.save()
+            messages.success(request,"リファレンスを作成しました。")
             return redirect("top")
         
     else:
@@ -280,6 +262,7 @@ def update(request,pk):
         
         if form.is_valid():
             form.save()
+            messages.success(request, "リファレンスを更新しました。")
             return redirect("detail", pk=reference.pk)
         
     else:
@@ -305,6 +288,7 @@ def delete(request,pk):
     
     if request.method == "POST":
         reference.delete()
+        messages.success(request, "リファレンスを削除しました。")
         return redirect("top")
 
     return render(

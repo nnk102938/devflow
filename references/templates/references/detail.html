@@ -71,28 +71,20 @@
     </div>
 
 </div>
+{% endblock %} {# content終了 #}
+
 
 <!-- ボタン設定 -->
+{% block script %}
 <script>
 
     // ワンクリックコピー ──────────────────────────────────────────────────────
     function copyCode() {
         const code = document.getElementById("code").innerText;
         navigator.clipboard.writeText(code);
-        showToast();
+
+        showToast("コピーしました");
     }
-
-    function showToast() {
-
-        const toast = document.getElementById("toast");
-
-        toast.classList.add("show");
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 1500);
-    }
-
     // お気に入り ──────────────────────────────────────────────────────────────
     const referenceId = "{{ reference.pk }}";
 
@@ -136,9 +128,4 @@
     })
 
 </script>
-
-<div id="toast">
-    コピーしました
-</div>
-
 {% endblock %}

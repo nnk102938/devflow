@@ -9,11 +9,13 @@
 
 {# このページ固有の内容 #}
 
-<div class="card">
+<div class="card delete-card">
 
     <h2>リファレンスを削除する</h2>
 
-    <p>「{{ reference.title }}」を削除してもいいですか？</p>
+    <p>「{{ reference.title }}」を削除しますか？</p>
+    <p class="warning-text">！この操作は元に戻せません。</p>
+    <p class="warning-text">！削除すると、このリファレンスを使用している作業フローからも削除されます。</p>
 
     <div class="button-area">
 
@@ -23,7 +25,7 @@
                 削除する
             </button>
         </form>
-        
+
         <a href="{% url 'detail' reference.pk %}" class="button-secondary">
             削除しません
         </a>

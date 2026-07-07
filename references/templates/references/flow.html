@@ -17,7 +17,7 @@ Dev Flow
         <div class="detail-actions flow">
             <!-- インフォメーションボタン -->
             <button id="flow-info-btn" class="icon-button tooltip" data-tooltip="{{ flow.created_at|date:" Y.m.d" }}作成
- {{ flow.updated_at|date:"Y.m.d" }}更新">
+                {{ flow.updated_at|date:"Y.m.d" }}更新">
                 <span class="material-symbols-outlined favorite-filled">info</span>
             </button>
 
@@ -98,8 +98,11 @@ Dev Flow
     </div>
 
 </section>
+{% endfor %}
+{% endblock %}
 
 <!-- ボタン設定 -->
+{% block script %}
 <script>
     function copyCode(button) {
 
@@ -111,27 +114,7 @@ Dev Flow
 
         navigator.clipboard.writeText(code);
 
-        showToast();
+        showToast("コピーしました");
     }
-
-    function showToast() {
-
-        const toast = document.getElementById("toast");
-
-        toast.classList.add("show");
-
-        setTimeout(() => {
-            toast.classList.remove("show");
-        }, 1500);
-    }
-
 </script>
-
-<div id="toast">
-    コピーしました
-</div>
-
-
-{% endfor %}
-
 {% endblock %}

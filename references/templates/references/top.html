@@ -31,7 +31,8 @@ top
 
 <section class="card reference-section">
     <h2>リファレンス一覧</h2>
-    <ul>
+    
+    <ul class="reference-list">
         {% for reference in references %}
 
         <li>
@@ -55,9 +56,5 @@ top
 
 
 {% block script %}
-
-<script>
-    updateFavoriteIcons();
-</script>
 
 {% endblock %}
