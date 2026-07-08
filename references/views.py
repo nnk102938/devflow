@@ -55,7 +55,7 @@ def flow(request, pk):
 
     return render(
         request,
-        "references/flow.html",
+        "references/flow_detail.html",
         {
             "flow":flow,
             "steps":steps,
