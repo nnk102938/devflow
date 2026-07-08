@@ -6,6 +6,20 @@ from django.contrib import messages
 
 
 # ───────────────────────────────────────────────────────────
+# 共通処理
+# ───────────────────────────────────────────────────────────
+def save_flow_steps(flow, step_ids):
+    for i, ref_id in enumerate(step_ids):
+        if ref_id:
+            FlowStep.objects.create(
+                flow=flow,
+                reference_id=ref_id,
+                order=i + 1,
+            )
+# ───────────────────────────────────────────────────────────
+
+
+# ───────────────────────────────────────────────────────────
 # 一覧表示
 # ───────────────────────────────────────────────────────────
 def top(request):
@@ -59,13 +73,11 @@ def flow_create(request):
         if form.is_valid():
             flow = form.save()
 
-            for i, ref_id in enumerate(request.POST.getlist("step_reference")):
-                if ref_id:
-                    FlowStep.objects.create(
-                        flow=flow,
-                        reference_id=ref_id,
-                        order=i + 1,
-                    )
+            save_flow_steps(
+                flow,
+                request.POST.getlist("step_reference")
+            )
+
             messages.success(request,"フローを作成しました。")
             return redirect("flow", pk=flow.pk)
         
@@ -81,6 +93,7 @@ def flow_create(request):
         {
             "form": form,
             "references":references,
+            "steps":[None],
             }
         )
 
@@ -105,13 +118,10 @@ def flow_update(request,pk):
 
             FlowStep.objects.filter(flow=flow).delete()
 
-            for i,ref_id in enumerate(request.POST.getlist("step_reference")):
-                if ref_id:
-                    FlowStep.objects.create(
-                        flow=flow,
-                        reference_id=ref_id,
-                        order=i + 1
-                    )
+            save_flow_steps(
+                flow,
+                request.POST.getlist("step_reference")
+            )
 
             messages.success(request, "フローを更新しました。")
             return redirect("flow", pk=flow.pk)

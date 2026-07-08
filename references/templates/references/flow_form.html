@@ -1,0 +1,100 @@
+<!-- フローフォームの共通テンプレート -->
+ 
+{# base.htmlを継承 #}
+{% extends "references/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="card">
+
+    <h2>
+        {% block page_title %}
+        {% endblock %}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <div class="form-row">
+                <h3>フロー名</h3>
+                {{ form.title }}
+            </div>
+
+            <div class="form-row">
+                <h3>概要</h3>
+                {{ form.description }}
+            </div>
+
+            <div id="step-container" class="step-container">
+
+                {% for step in steps %}
+                <div class="form-row step-item">
+
+                    <h3>Step{{ forloop.counter }}</h3>
+
+                    <div class="step-actions">
+
+                        <button type="button" class="step-up">
+                            <span class="material-symbols-outlined">
+                                keyboard_arrow_up
+                            </span>
+                        </button>
+
+                        <button type="button" class="step-down">
+                            <span class="material-symbols-outlined">
+                                keyboard_arrow_down
+                            </span>
+                        </button>
+
+                        <button type="button" class="step-delete">
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </button>
+
+                    </div>
+
+                    <select name="step_reference">
+
+                        <option value="">選択してください</option>
+
+                        {% for ref in references %}
+
+                        <option value="{{ref.pk}}" {% if step and ref.pk == step.reference.pk %} selected {% endif %}>
+                            {{ ref.title }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+                {% endfor %}
+            </div>
+
+            <div class="form-row">
+                <button type="button" id="add-step" class="button-add">
+                    ＋ step追加
+                </button>
+            </div>
+
+            <div class="button-area">
+                <button type="submit" class="button-primary">
+                    {% block submit_text %}
+                    {% endblock %}
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'references/js/flow_steps.js' %}"></script>
+{% endblock %}
+
