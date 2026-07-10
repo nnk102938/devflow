@@ -127,13 +127,18 @@ def flow_update(request,pk):
             return redirect("flow", pk=flow.pk)
         
     else:
-        steps = FlowStep.objects.filter(
-            flow=flow
-        ).order_by("order")
-
+        steps = list(
+            FlowStep.objects.filter(
+                flow=flow
+                ).order_by("order")
+                )
+            
+        if not steps:
+            steps = [None]
+                
         form = FlowForm(
             instance=flow,
-        )
+            )
 
     return render(
         request,

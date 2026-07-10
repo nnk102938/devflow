@@ -14,6 +14,25 @@ body {
 *::after {
     box-sizing: border-box;
 }
+
+/* リンク色 */
+.flow-section li,
+.reference-section li {
+    padding: 6px 0;
+}
+
+.flow-section li a,
+.reference-section li a {
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color .2s;
+}
+
+.flow-section li a:hover,
+.reference-section li a:hover {
+    color: #537ca5;
+}
 /* ────────────────────────────────────────────────── */
 
 
@@ -196,7 +215,7 @@ li.card {
 /* ────────────────────────────────────────────────── */
 .flow-card {
     width: 100%;
-    background-color:  rgba(83, 124, 165, 0.55);
+    background-color:  rgba(83, 124, 165, 0.58);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
