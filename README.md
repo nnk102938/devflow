@@ -98,7 +98,7 @@ python3 manage.py runserver
 サーバー起動後、ブラウザで以下のURLへアクセスしてください。
 
 ```
-http://127.0.0.1:8000/
+http://127.0.0.1:8000/reference/
 ```
 
 ---
